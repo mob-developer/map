@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">map</string>
+    <string name="title_bookmark">Bookmark</string>
+    <string name="title_map">Map</string>
+    <string name="title_setting">Setting</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoibW9iLWRldiIsImEiOiJja25rYnNwZG8wOWx2MnVvMDZ1MG5pZjI1In0.ip4eBjRa2IOBt1CWIh-lDA</string>
+
+</resources>
