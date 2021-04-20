@@ -1,4 +1,4 @@
-package com.mob.developer;
+package com.example.map;
 
 import org.junit.Test;
 
