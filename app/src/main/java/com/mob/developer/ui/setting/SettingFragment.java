@@ -1,4 +1,4 @@
-package com.example.map.ui.home;
+package com.mob.developer.ui.setting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,19 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.map.R;
+import com.mob.developer.R;
 
-public class HomeFragment extends Fragment {
+public class SettingFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private SettingViewModel settingViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        settingViewModel =
+                new ViewModelProvider(this).get(SettingViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_setting, container, false);
+        final TextView textView = root.findViewById(R.id.text_notifications);
+        settingViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
