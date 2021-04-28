@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements
     // Variables needed to listen to location updates
     private MainActivityLocationCallback callback = new MainActivityLocationCallback(this);
     private static boolean cameraBasicMode = false;
+    private static MainActivity activity;
+    private static LocationEngineResult preResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +162,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private static class MainActivityLocationCallback
-            implements LocationEngineCallback<LocationEngineResult> {
+    private static class MainActivityLocationCallback implements LocationEngineCallback<LocationEngineResult> {
 
         private final WeakReference<MainActivity> activityWeakReference;
 
@@ -176,9 +177,10 @@ public class MainActivity extends AppCompatActivity implements
          */
         @Override
         public void onSuccess(LocationEngineResult result) {
-            MainActivity activity = activityWeakReference.get();
+            activity = activityWeakReference.get();
 
             if (activity != null) {
+                preResult = result;
                 Location location = result.getLastLocation();
 
                 if (location == null) {
