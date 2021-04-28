@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -72,6 +73,12 @@ public class MainActivity extends AppCompatActivity implements
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        Button button = findViewById(R.id.location);
+        button.setOnClickListener(v -> {
+            changeCameraToBasicMode(preResult,activity);
+        });
+
     }
 
 
@@ -274,4 +281,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
+
+
 }
