@@ -9,6 +9,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 // Classes needed to initialize the map
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements
     private long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
     // Variables needed to listen to location updates
     private MainActivityLocationCallback callback = new MainActivityLocationCallback(this);
+    private static boolean cameraBasicMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +193,11 @@ public class MainActivity extends AppCompatActivity implements
                 // Pass the new location to the Maps SDK's LocationComponent
                 if (activity.mapboxMap != null && result.getLastLocation() != null) {
                     activity.mapboxMap.getLocationComponent().forceLocationUpdate(result.getLastLocation());
+//                    activity.mapboxMap.getLocationComponent().setCameraMode(CameraMode.NONE_GPS,100,5.0,0.0,0.0,null);
+                    if (!cameraBasicMode) {
+                        changeCameraToBasicMode(result, activity);
+                        cameraBasicMode = true;
+                    }
                 }
             }
         }
@@ -207,6 +216,15 @@ public class MainActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static void changeCameraToBasicMode(LocationEngineResult result,MainActivity activity){
+        CameraPosition position = new CameraPosition.Builder()
+                .target(new LatLng(result.getLastLocation().getLatitude(), result.getLastLocation().getLongitude()))
+                .zoom(12)
+                .build();
+
+        activity.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 3000);
     }
 
     @Override
