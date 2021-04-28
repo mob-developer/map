@@ -106,6 +106,19 @@ public class MainActivity extends AppCompatActivity implements
 //        });
 
 
+        Button bookmark = findViewById(R.id.bookmark);
+        bookmark.setOnClickListener(v -> {
+            startActivity(new Intent(this,Bookmark.class));
+            overridePendingTransition(0,0);
+            finish();
+        });
+
+        Button setting = findViewById(R.id.setting);
+        setting.setOnClickListener(v -> {
+            startActivity(new Intent(this,Setting.class));
+            overridePendingTransition(0,0);
+            finish();
+        });
     }
 
 
