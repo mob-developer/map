@@ -34,9 +34,7 @@ import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 
-/**
- * Use the Mapbox Core Library to listen to device location updates
- */
+
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback, PermissionsListener {
     // Variables needed to initialize a map
@@ -46,13 +44,18 @@ public class MainActivity extends AppCompatActivity implements
     private PermissionsManager permissionsManager;
     // Variables needed to add the location engine
     private LocationEngine locationEngine;
-    private long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
-    private long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
+    private final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
+    private final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
     // Variables needed to listen to location updates
     private MainActivityLocationCallback callback = new MainActivityLocationCallback(this);
+    // Variables needed to change camera
     private static boolean cameraBasicMode = false;
     private static MainActivity activity;
     private static LocationEngineResult preResult;
+    // Variables needed to bookmark location
+    private static double preLatitude = 0.0;
+    private static double preLongitude = 0.0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements
             changeCameraToBasicMode(preResult,activity);
         });
 
+
+
+
+
     }
 
 
@@ -94,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements
                         enableLocationComponent(style);
                     }
                 });
+        mapboxMap.addOnMapClickListener(new MapboxMap.OnMapClickListener() {
+            @Override
+            public boolean onMapClick(@NonNull LatLng point) {
+
+                Toast.makeText(MainActivity.this, String.format("User clicked at: %s", point.toString()), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
     }
 
     /**
@@ -195,9 +210,9 @@ public class MainActivity extends AppCompatActivity implements
                 }
 
                 // Create a Toast which displays the new location's coordinates
-                Toast.makeText(activity, String.format(activity.getString(R.string.new_location),
-                        String.valueOf(result.getLastLocation().getLatitude()), String.valueOf(result.getLastLocation().getLongitude())),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, String.format(activity.getString(R.string.new_location),
+//                        String.valueOf(result.getLastLocation().getLatitude()), String.valueOf(result.getLastLocation().getLongitude())),
+//                        Toast.LENGTH_SHORT).show();
 
                 // Pass the new location to the Maps SDK's LocationComponent
                 if (activity.mapboxMap != null && result.getLastLocation() != null) {
