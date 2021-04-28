@@ -3,12 +3,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 // Classes needed to initialize the map
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -56,15 +58,18 @@ public class MainActivity extends AppCompatActivity implements
     // Variables needed to bookmark location
     private static double selectedLatitude = 0.0;
     private static double selectedLongitude = 0.0;
+    private static ConstraintLayout modal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //turn on bluetooth
         //startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
         intent.putExtra("enabled", true);
         sendBroadcast(intent);
+
 
 
         // Mapbox access token is configured here. This needs to be called either in your application
@@ -78,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        Button button = findViewById(R.id.location);
-        button.setOnClickListener(v -> {
+        Button locationBtn = findViewById(R.id.location);
+        locationBtn.setOnClickListener(v -> {
             changeCameraToBasicMode(preResult,activity);
         });
 //        Button button3 = findViewById(R.id.button3);
@@ -111,8 +116,8 @@ public class MainActivity extends AppCompatActivity implements
         mapboxMap.addOnMapLongClickListener(new MapboxMap.OnMapLongClickListener() {
             @Override
             public boolean onMapLongClick(@NonNull LatLng point) {
-
-
+                modal = findViewById(R.id.modal);
+                modal.setVisibility(View.VISIBLE);
                 Toast.makeText(MainActivity.this, String.format("User clicked at: %s", point.toString()), Toast.LENGTH_LONG).show();
                 return true;
             }
