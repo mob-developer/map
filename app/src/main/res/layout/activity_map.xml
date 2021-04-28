@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/locationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -49,10 +49,10 @@
             android:layout_marginTop="8dp"
             android:text="location name:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/bookmarkName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -62,7 +62,7 @@
             android:ems="10"
             android:hint="name"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -77,11 +77,13 @@
 
     <Button
         android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:foreground="@drawable/gps"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toTopOf="@+id/modal"
         app:layout_constraintEnd_toEndOf="parent" />
 

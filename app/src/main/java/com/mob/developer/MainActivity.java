@@ -1,18 +1,26 @@
 package com.mob.developer;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 // Classes needed to initialize the map
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -23,6 +31,7 @@ import com.mapbox.mapboxsdk.maps.Style;
 // Classes needed to handle location permissions
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+
 import java.util.List;
 // Classes needed to add the location engine
 import com.mapbox.android.core.location.LocationEngine;
@@ -30,6 +39,7 @@ import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
 import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.android.core.location.LocationEngineResult;
+
 import java.lang.ref.WeakReference;
 // Classes needed to add the location component
 import com.mapbox.mapboxsdk.location.LocationComponent;
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements
     private static double selectedLatitude = 0.0;
     private static double selectedLongitude = 0.0;
     private static ConstraintLayout modal;
+    private static Marker marker = null;
+    private TextView locationTV;
+    private Button saveBtn;
+    private EditText bookmarkName;
 
 
     @Override
@@ -69,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
         intent.putExtra("enabled", true);
         sendBroadcast(intent);
-
 
 
         // Mapbox access token is configured here. This needs to be called either in your application
@@ -85,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Button locationBtn = findViewById(R.id.location);
         locationBtn.setOnClickListener(v -> {
-            changeCameraToBasicMode(preResult,activity);
+            changeCameraToBasicMode(preResult, activity);
         });
 //        Button button3 = findViewById(R.id.button3);
 //        button3.setOnClickListener(v -> {
@@ -93,18 +106,16 @@ public class MainActivity extends AppCompatActivity implements
 //        });
 
 
-
-
-
-
-
     }
-
 
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
+        modal = findViewById(R.id.modal);
+        locationTV = findViewById(R.id.locationTextView);
+        saveBtn = findViewById(R.id.save);
+        bookmarkName = findViewById(R.id.bookmarkName);
 
         mapboxMap.setStyle(Style.MAPBOX_STREETS,
                 new Style.OnStyleLoaded() {
@@ -116,18 +127,41 @@ public class MainActivity extends AppCompatActivity implements
         mapboxMap.addOnMapLongClickListener(new MapboxMap.OnMapLongClickListener() {
             @Override
             public boolean onMapLongClick(@NonNull LatLng point) {
-                modal = findViewById(R.id.modal);
                 modal.setVisibility(View.VISIBLE);
-                Toast.makeText(MainActivity.this, String.format("User clicked at: %s", point.toString()), Toast.LENGTH_LONG).show();
+                if (marker != null) {
+                    marker.remove();
+                    marker = null;
+                }
+                marker = mapboxMap.addMarker(new MarkerOptions().position(point).title("new location").snippet("you can save it!"));
+                locationTV.setText("save location(\"" + point.getLatitude() + "\", \"" + point.getLongitude() + "\")");
+                selectedLatitude = point.getLatitude();
+                selectedLongitude = point.getLongitude();
+                //Toast.makeText(MainActivity.this, String.format("User clicked at: %s", point.toString()), Toast.LENGTH_LONG).show();
                 return true;
             }
+        });
+        mapboxMap.addOnMapClickListener(new MapboxMap.OnMapClickListener() {
+            @Override
+            public boolean onMapClick(@NonNull LatLng point) {
+                if (modal.getVisibility() == View.VISIBLE) {
+                    modal.setVisibility(View.GONE);
+                }
+                if (marker != null) {
+                    marker.remove();
+                    marker = null;
+                }
+                return true;
+            }
+        });
+        saveBtn.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "save "+bookmarkName.getText()+" at lat: "+selectedLatitude+" long: "+selectedLongitude, Toast.LENGTH_LONG).show();
         });
     }
 
     /**
      * Initialize the Maps SDK's LocationComponent
      */
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
@@ -255,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public static void changeCameraToBasicMode(LocationEngineResult result,MainActivity activity){
+    public static void changeCameraToBasicMode(LocationEngineResult result, MainActivity activity) {
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(result.getLastLocation().getLatitude(), result.getLastLocation().getLongitude()))
                 .zoom(12)
@@ -309,7 +343,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
 
 
 }
