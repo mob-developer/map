@@ -1,12 +1,14 @@
 package com.mob.developer;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
 
+@Dao
 public interface BookmarkDao {
     // allowing the insert of the same bookmark multiple times by passing a
     // conflict resolution strategy

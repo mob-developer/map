@@ -46,9 +46,9 @@ public abstract class BookmarkRoomDatabase extends RoomDatabase {
                 BookmarkDao dao = INSTANCE.bookmarkDao();
                 dao.deleteAll();
 
-                Bookmark bookmark = new Bookmark(1, "loc 1", "1.111", "2.222");
+                Bookmark bookmark = new Bookmark( "loc 1", "1.111", "2.222");
                 dao.insert(bookmark);
-                bookmark = new Bookmark(2, "loc 2", "21.111", "32.222");
+                bookmark = new Bookmark( "loc 2", "21.111", "32.222");
                 dao.insert(bookmark);
             });
         }

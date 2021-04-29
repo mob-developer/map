@@ -7,5 +7,6 @@
     <string name="user_location_permission_explanation">please</string>
     <string name="user_location_permission_not_granted">error!</string>
     <string name="new_location">New lat: %1$s New longitude: %2$s</string>
+    <string name="empty_not_saved">error in saving!</string>
 
 </resources>

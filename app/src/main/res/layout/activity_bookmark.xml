@@ -68,11 +68,10 @@
         app:layout_constraintStart_toEndOf="@+id/map"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bookmark"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

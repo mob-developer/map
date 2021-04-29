@@ -18,11 +18,14 @@ public class Bookmark {
     @ColumnInfo(name = "long")
     public String bLong;
 
-    public Bookmark(int id, String bName, String bLat, String bLong) {
-        this.id = id;
+    public Bookmark(String bName, String bLat, String bLong) {
         this.bName = bName;
         this.bLat = bLat;
         this.bLong = bLong;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getbName() {

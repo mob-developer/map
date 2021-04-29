@@ -3,6 +3,7 @@ package com.mob.developer;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +47,8 @@ import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 
+import static com.mob.developer.BookmarkActivity.NEW_WORD_ACTIVITY_REQUEST_CODE;
+
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback, PermissionsListener {
@@ -72,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements
     private TextView locationTV;
     private Button saveBtn;
     private EditText bookmarkName;
+    public static final String EXTRA_REPLY1 = "bName";
+    public static final String EXTRA_REPLY2 = "bLat";
+    public static final String EXTRA_REPLY3 = "bLong";
+
+
 
 
     @Override
@@ -110,17 +118,20 @@ public class MainActivity extends AppCompatActivity implements
         Button bookmark = findViewById(R.id.bookmark);
         bookmark.setOnClickListener(v -> {
             startActivity(new Intent(this, BookmarkActivity.class));
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
             finish();
         });
 
         Button setting = findViewById(R.id.setting);
         setting.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingActivity.class));
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
             finish();
         });
     }
+
+
+
 
 
     @Override
@@ -168,7 +179,17 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
         saveBtn.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "save "+bookmarkName.getText()+" at lat: "+selectedLatitude+" long: "+selectedLongitude, Toast.LENGTH_LONG).show();
+            Intent replyIntent = new Intent();
+
+            String bName = bookmarkName.getText().toString();
+            replyIntent.putExtra(EXTRA_REPLY1, bName);
+            replyIntent.putExtra(EXTRA_REPLY2, selectedLatitude);
+            replyIntent.putExtra(EXTRA_REPLY3, selectedLongitude);
+            setResult(RESULT_OK, replyIntent);
+            finish();
+
+
+            Toast.makeText(MainActivity.this, "save " + bookmarkName.getText() + " at lat: " + selectedLatitude + " long: " + selectedLongitude, Toast.LENGTH_LONG).show();
         });
     }
 
