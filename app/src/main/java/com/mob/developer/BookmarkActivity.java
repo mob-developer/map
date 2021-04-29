@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class Bookmark extends AppCompatActivity {
+public class BookmarkActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class Bookmark extends AppCompatActivity {
 
         Button setting = findViewById(R.id.setting);
         setting.setOnClickListener(v -> {
-            startActivity(new Intent(this,Setting.class));
+            startActivity(new Intent(this, SettingActivity.class));
             overridePendingTransition(0,0);
             finish();
         });

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Switch;
 
-public class Setting extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class Setting extends AppCompatActivity {
         });
         Button bookmark = findViewById(R.id.bookmark);
         bookmark.setOnClickListener(v -> {
-            startActivity(new Intent(this,Bookmark.class));
+            startActivity(new Intent(this, BookmarkActivity.class));
             overridePendingTransition(0,0);
             finish();
         });

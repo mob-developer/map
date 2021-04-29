@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 // Classes needed to initialize the map
 import com.mapbox.mapboxsdk.Mapbox;
@@ -110,14 +109,14 @@ public class MainActivity extends AppCompatActivity implements
 
         Button bookmark = findViewById(R.id.bookmark);
         bookmark.setOnClickListener(v -> {
-            startActivity(new Intent(this,Bookmark.class));
+            startActivity(new Intent(this, BookmarkActivity.class));
             overridePendingTransition(0,0);
             finish();
         });
 
         Button setting = findViewById(R.id.setting);
         setting.setOnClickListener(v -> {
-            startActivity(new Intent(this,Setting.class));
+            startActivity(new Intent(this, SettingActivity.class));
             overridePendingTransition(0,0);
             finish();
         });

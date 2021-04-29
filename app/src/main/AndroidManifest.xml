@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Map">
-        <activity android:name=".Setting" />
-        <activity android:name=".Bookmark" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".BookmarkActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
