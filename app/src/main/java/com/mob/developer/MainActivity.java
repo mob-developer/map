@@ -17,6 +17,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.room.Room;
 // Classes needed to initialize the map
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -47,7 +48,6 @@ import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 
-import static com.mob.developer.BookmarkActivity.NEW_WORD_ACTIVITY_REQUEST_CODE;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 marker = mapboxMap.addMarker(new MarkerOptions().position(point).title("new location").snippet("you can save it!"));
                 locationTV.setText("save location(\"" + point.getLatitude() + "\", \"" + point.getLongitude() + "\")");
+                bookmarkName.setText("");
                 selectedLatitude = point.getLatitude();
                 selectedLongitude = point.getLongitude();
                 //Toast.makeText(MainActivity.this, String.format("User clicked at: %s", point.toString()), Toast.LENGTH_LONG).show();
@@ -179,17 +180,12 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
         saveBtn.setOnClickListener(v -> {
-            Intent replyIntent = new Intent();
-
-            String bName = bookmarkName.getText().toString();
-            replyIntent.putExtra(EXTRA_REPLY1, bName);
-            replyIntent.putExtra(EXTRA_REPLY2, selectedLatitude);
-            replyIntent.putExtra(EXTRA_REPLY3, selectedLongitude);
-            setResult(RESULT_OK, replyIntent);
-            finish();
-
-
-            Toast.makeText(MainActivity.this, "save " + bookmarkName.getText() + " at lat: " + selectedLatitude + " long: " + selectedLongitude, Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, "save " + bookmarkName.getText() + " at lat: " + selectedLatitude + " long: " + selectedLongitude, Toast.LENGTH_LONG).show();
+            BookmarkRoomDatabase database = Room.databaseBuilder(this,BookmarkRoomDatabase.class,"bookmarkDB").allowMainThreadQueries().build();
+            BookmarkDao bookmarkDao = database.bookmarkDao();
+            Bookmark bookmark = new Bookmark(""+bookmarkName.getText(),""+selectedLatitude,""+selectedLongitude);
+            bookmarkDao.insert(bookmark);
+            Toast.makeText(this, "saved!", Toast.LENGTH_SHORT).show();
         });
     }
 
