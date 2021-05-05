@@ -8,16 +8,17 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class BookmarkActivity extends AppCompatActivity {
 
-
-
-
+    ArrayList<Bookmark> bookmarkArrayList;
 
 
     @Override
@@ -31,7 +32,8 @@ public class BookmarkActivity extends AppCompatActivity {
 
         BookmarkDao bookmarkDao = database.bookmarkDao();
 
-        ArrayList<Bookmark> bookmarkArrayList = new ArrayList<>(bookmarkDao.getAlphabetizedBookmarks());
+
+        bookmarkArrayList = new ArrayList<>(bookmarkDao.getAlphabetizedBookmarks());
 
         BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(bookmarkArrayList);
         recyclerView.setHasFixedSize(true);
@@ -58,6 +60,26 @@ public class BookmarkActivity extends AppCompatActivity {
             overridePendingTransition(0,0);
             finish();
         });
+
+
+        EditText editText = findViewById(R.id.searchEditText);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
     }
 
