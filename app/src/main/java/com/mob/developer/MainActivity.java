@@ -128,6 +128,13 @@ public class MainActivity extends AppCompatActivity implements
             overridePendingTransition(0, 0);
             finish();
         });
+
+        Button searchMap = findViewById(R.id.searchMap);
+        searchMap.setOnClickListener(v -> {
+            startActivity(new Intent(this,SearchActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        });
     }
 
 
