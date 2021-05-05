@@ -1,5 +1,8 @@
 package com.mob.developer;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import java.util.ArrayList;
 
@@ -36,7 +40,12 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
         holder.deleteItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "click on item: " + current.getId(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(view.getContext(), "click on item: " + current.getId(), Toast.LENGTH_SHORT).show();
+                BookmarkRoomDatabase database = Room.databaseBuilder(view.getContext(),BookmarkRoomDatabase.class,"bookmarkDB").allowMainThreadQueries().build();
+                BookmarkDao bookmarkDao = database.bookmarkDao();
+                bookmarkDao.delete(current.getId());
+                Toast.makeText(view.getContext(), "deleted!", Toast.LENGTH_SHORT).show();
+                ((BookmarkActivity)view.getContext()).recreate();
             }
         });
     }
