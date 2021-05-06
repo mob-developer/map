@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="50dp" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <Button
         android:id="@+id/bookmark"
@@ -19,18 +19,20 @@
         android:layout_height="0dp"
         android:background="@color/white"
         android:shadowColor="@color/white"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:iconTint="@color/black"
-        app:rippleColor="@color/white"
-        app:strokeColor="@color/white"
         android:text="@string/title_bookmark"
+        android:textColor="#0974BD"
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_bookmark_black"
+        app:iconGravity="top"
+        app:iconPadding="0dp"
+        app:iconTint="#0974BD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/map"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        />
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/white" />
 
     <Button
         android:id="@+id/map"
@@ -38,17 +40,20 @@
         android:layout_height="0dp"
         android:background="@color/white"
         android:shadowColor="@color/white"
+        android:text="@string/title_map"
         android:textColor="@color/black"
         app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_place_black"
+        app:iconGravity="top"
+        app:iconPadding="0dp"
         app:iconTint="@color/black"
-        app:rippleColor="@color/white"
-        app:strokeColor="@color/white"
-        android:text="@string/title_map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/setting"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bookmark"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/white" />
 
     <Button
         android:id="@+id/setting"
@@ -56,17 +61,20 @@
         android:layout_height="0dp"
         android:background="@color/white"
         android:shadowColor="@color/white"
+        android:text="@string/title_setting"
         android:textColor="@color/black"
         app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_settings_black"
+        app:iconGravity="top"
+        app:iconPadding="0dp"
         app:iconTint="@color/black"
-        app:rippleColor="@color/white"
-        app:strokeColor="@color/white"
-        android:text="@string/title_setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/map"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc1"
