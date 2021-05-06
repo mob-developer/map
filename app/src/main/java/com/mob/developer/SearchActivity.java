@@ -8,6 +8,12 @@ import android.text.TextWatcher;
 import android.widget.AbsListView;
 import android.widget.EditText;
 
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class SearchActivity extends AppCompatActivity {
 
     @Override
@@ -24,7 +30,19 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request =
+                        new Request
+                                .Builder()
+                                .url("https://api.mapbox.com/geocoding/v5/mapbox.places/" + s +
+                                        ".json?access_token=sk.eyJ1IjoibWhkb2xhdGFiYWRpIiwiYSI6I" +
+                                        "mNrbnlteW5hNTFocjYycG1rZDNraXNtYmQifQ.0rbE6C_1BJWVewEHLv09kQ")
+                                .build();
+                try {
+                    Response response = okHttpClient.newCall(request).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
