@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class BookmarkActivity extends AppCompatActivity {
 
     ArrayList<Bookmark> bookmarkArrayList;
+    ArrayList<Bookmark> bookmarkArrayListTemp;
 
 
     @Override
@@ -34,6 +35,7 @@ public class BookmarkActivity extends AppCompatActivity {
 
 
         bookmarkArrayList = new ArrayList<>(bookmarkDao.getAlphabetizedBookmarks());
+        bookmarkArrayListTemp = new ArrayList<>(bookmarkArrayList);
 
         BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(bookmarkArrayList);
         recyclerView.setHasFixedSize(true);
@@ -62,7 +64,7 @@ public class BookmarkActivity extends AppCompatActivity {
         });
 
 
-        EditText editText = findViewById(R.id.searchEditText);
+        EditText editText = findViewById(R.id.searchBookmark);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,7 +73,18 @@ public class BookmarkActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (s.equals("")){
+                    bookmarkArrayListTemp = new ArrayList<>(bookmarkArrayList);
+                }else{
+                    bookmarkArrayListTemp = new ArrayList<>();
+                    for (Bookmark bookmark : bookmarkArrayList) {
+                        if (bookmark.getbName().matches(".*"+s+".*")){
+                            bookmarkArrayListTemp.add(bookmark);
+                        }
+                    }
+                }
+                BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(bookmarkArrayListTemp);
+                recyclerView.setAdapter(bookmarkAdapter);
             }
 
             @Override
