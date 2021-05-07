@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.room.Room;
 // Classes needed to initialize the map
@@ -149,13 +150,24 @@ public class MainActivity extends AppCompatActivity implements
         saveBtn = findViewById(R.id.save);
         bookmarkName = findViewById(R.id.bookmarkName);
 
-        mapboxMap.setStyle(Style.MAPBOX_STREETS,
-                new Style.OnStyleLoaded() {
-                    @Override
-                    public void onStyleLoaded(@NonNull Style style) {
-                        enableLocationComponent(style);
-                    }
-                });
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            mapboxMap.setStyle(Style.DARK,
+                    new Style.OnStyleLoaded() {
+                        @Override
+                        public void onStyleLoaded(@NonNull Style style) {
+                            enableLocationComponent(style);
+                        }
+                    });
+        }else{
+            mapboxMap.setStyle(Style.MAPBOX_STREETS,
+                    new Style.OnStyleLoaded() {
+                        @Override
+                        public void onStyleLoaded(@NonNull Style style) {
+                            enableLocationComponent(style);
+                        }
+                    });
+        }
+
         mapboxMap.addOnMapLongClickListener(new MapboxMap.OnMapLongClickListener() {
             @Override
             public boolean onMapLongClick(@NonNull LatLng point) {
